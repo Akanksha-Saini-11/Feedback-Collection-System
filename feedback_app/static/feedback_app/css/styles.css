@@ -1,0 +1,63 @@
+/* General layout */
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #0d6efd !important;
+}
+
+/* Headings */
+h1 {
+  margin-bottom: 1rem;
+  color: #343a40;
+}
+
+/* Form styling */
+form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.form-label {
+  font-weight: 500;
+  color: #495057;
+}
+
+input, textarea, select {
+  border-radius: 6px !important;
+}
+
+/* Buttons */
+.btn-success {
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Feedback list cards */
+.card {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}

@@ -1,0 +1,96 @@
+{% extends "feedback_app/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-3">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-semibold text-primary mb-0">
+      <i class="bi bi-chat-left-dots-fill me-2"></i> User Feedback
+    </h3>
+    <a href="{% url 'feedback_add' %}" class="btn btn-success">
+      <i class="bi bi-plus-circle me-1"></i> Add Feedback
+    </a>
+  </div>
+
+  {% if feedback_list %}
+    <div class="row g-4">
+      {% for fb in feedback_list %}
+        <div class="col-md-6 col-lg-4">
+          <a href="{{ fb.get_absolute_url }}" class="text-decoration-none">
+            <div class="card h-100 border-0 shadow-sm feedback-card p-3" style="border-radius: 15px; transition: all 0.3s ease;">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h5 class="fw-semibold text-dark mb-1">{{ fb.name }}</h5>
+                  <p class="text-muted small mb-2">{{ fb.email }}</p>
+                </div>
+                <span class="badge bg-primary rounded-pill px-3 py-2">
+                  ⭐ {{ fb.rating }}
+                </span>
+              </div>
+              <p class="text-muted small mb-3">{{ fb.message|truncatechars:100 }}</p>
+              <div class="text-end">
+                <small class="text-secondary">
+                  <i class="bi bi-clock me-1"></i>{{ fb.created_at|date:"M d, Y • H:i" }}
+                </small>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+      <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                <i class="bi bi-arrow-left"></i> Previous
+              </a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <span class="page-link"><i class="bi bi-arrow-left"></i> Previous</span>
+            </li>
+          {% endif %}
+
+          <li class="page-item disabled">
+            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+          </li>
+
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                Next <i class="bi bi-arrow-right"></i>
+              </a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <span class="page-link">Next <i class="bi bi-arrow-right"></i></span>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+  {% else %}
+    <div class="text-center py-5">
+      <i class="bi bi-inbox text-secondary fs-1 mb-3"></i>
+      <p class="text-muted mb-2">No feedback yet.</p>
+      <a href="{% url 'feedback_add' %}" class="btn btn-outline-primary">
+        <i class="bi bi-plus-circle me-1"></i> Add the first feedback
+      </a>
+    </div>
+  {% endif %}
+</div>
+
+<!-- Inline Styles (optional small hover animation) -->
+<style>
+  .feedback-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  }
+</style>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+{% endblock %}

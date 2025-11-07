@@ -1,0 +1,166 @@
+{% extends "feedback_app/base.html" %}
+{% block content %}
+<style>
+  body {
+    background-color: #f3f4f8;
+  }
+
+  .feedback-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 80vh;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .feedback-card {
+    width: 100%;
+    max-width: 650px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    padding: 45px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feedback-card::before {
+    content: "";
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 250px;
+    height: 250px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    opacity: 0.15;
+  }
+
+  .feedback-title {
+    font-weight: 700;
+    text-align: center;
+    color: #2f2f6e;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  .form-control,
+  .form-select {
+    border-radius: 12px;
+    padding: 12px 15px;
+    border: 1.5px solid #d8d8e0;
+    font-size: 1rem;
+    box-shadow: none;
+    transition: 0.3s ease;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 6px rgba(102, 126, 234, 0.4);
+  }
+
+  textarea.form-control {
+    resize: none;
+    min-height: 120px;
+  }
+
+  .btn-submit {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 10px 25px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-submit:hover {
+    background: linear-gradient(90deg, #5b6edb, #6c4199);
+    transform: translateY(-2px);
+  }
+
+  .btn-cancel {
+    border-radius: 10px;
+    font-weight: 500;
+    border: 1.5px solid #ccc;
+    padding: 10px 25px;
+  }
+
+  .btn-cancel:hover {
+    background-color: #f2f2f2;
+  }
+
+  .btn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+  }
+
+  .errorlist {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+</style>
+
+<div class="feedback-wrapper">
+  <div class="feedback-card">
+    <h2 class="feedback-title">
+      {% if form.instance.pk %}
+        ✏️ Edit Feedback
+      {% else %}
+        💬 Add Feedback
+      {% endif %}
+    </h2>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <!-- Name -->
+      <div class="mb-3">
+        <label class="form-label" for="{{ form.name.id_for_label }}">Full Name</label>
+        {{ form.name }}
+        {{ form.name.errors }}
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label" for="{{ form.email.id_for_label }}">Email Address</label>
+        {{ form.email }}
+        {{ form.email.errors }}
+      </div>
+
+      <!-- Rating -->
+      <div class="mb-3">
+        <label class="form-label" for="{{ form.rating.id_for_label }}">Rating</label>
+        {{ form.rating }}
+        {{ form.rating.errors }}
+      </div>
+
+      <!-- Message -->
+      <div class="mb-4">
+        <label class="form-label" for="{{ form.message.id_for_label }}">Message</label>
+        {{ form.message }}
+        {{ form.message.errors }}
+      </div>
+
+      <!-- Buttons -->
+      <div class="btn-row">
+        <a href="{% url 'feedback_list' %}" class="btn btn-cancel">Cancel</a>
+        <button type="submit" class="btn btn-submit">
+          {% if form.instance.pk %}Update{% else %}Submit{% endif %}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
